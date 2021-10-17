@@ -1,0 +1,46 @@
+{
+  "name": "volcanic-backend",
+  "version": "1.0.0",
+  "description": "Volcanic Test Backend",
+  "main": "build/src/start.js",
+  "types": "build/src/start.d.ts",
+  "files": [
+    "build/src"
+  ],
+  "scripts": {
+    "test": "ava --timeout=30s --verbose",
+    "pretest": "eslint ./src/**/*.ts",
+    "build": "tsc -p .",
+    "prepare": "npm run build",
+    "watch": "tsc --watch",
+    "start": "node build/src/start.js",
+    "dev": "TS_NODE_FILES=true nodemon --watch 'src/**' --ext 'ts,json' --ignore 'src/**/*.spec.ts' --exec 'ts-node' src/start.ts",
+    "lint": "eslint ./src/**/*.ts --fix",
+    "knex:init": "knex init"
+  },
+  "author": "Indra Gunawan <feedsbrain@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "knex": "^0.95.11",
+    "nanoid": "^3.1.30",
+    "objection": "^2.2.17",
+    "pg": "^8.7.1"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.12",
+    "@types/express": "^4.17.13",
+    "@typescript-eslint/eslint-plugin": "^5.0.0",
+    "@typescript-eslint/parser": "^5.0.0",
+    "eslint": "^7.32.0",
+    "eslint-config-standard": "^16.0.3",
+    "eslint-plugin-import": "^2.25.2",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^5.1.0",
+    "nodemon": "^2.0.13",
+    "typescript": "^4.4.4"
+  }
+}
