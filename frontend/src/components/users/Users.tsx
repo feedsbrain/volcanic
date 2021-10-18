@@ -4,10 +4,12 @@ import React, { useEffect, useState } from 'react'
 import { Table, Button, Space, Modal } from 'antd'
 import { ExclamationCircleOutlined } from '@ant-design/icons'
 import useToken from '../../hooks/useToken'
+import UserModal from './UserModal'
 
 const Users = () => {
   const { token, isAdmin } = useToken()
   const [users, setUsers] = useState([])
+  const [userModalVisible, setUserModalVisible] = useState(false)
 
   const fetchUsers = async () => {
     return fetch('http://localhost:3001/api/users', {
@@ -15,6 +17,27 @@ const Users = () => {
       headers: {
         Authorization: `Bearer ${token}`
       }
+    }).then((data) => data.json())
+  }
+
+  const refetchUsers = async () => {
+    const newData = await fetchUsers()
+    setUsers(newData)
+  }
+
+  const addUser = async (userData: {
+    name: string
+    email: string
+    password: string
+    role: string
+  }) => {
+    return fetch('http://localhost:3001/api/users', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`
+      },
+      body: JSON.stringify(userData)
     }).then((data) => data.json())
   }
 
@@ -33,8 +56,7 @@ const Users = () => {
             Authorization: `Bearer ${token}`
           }
         }).then(async () => {
-          const newData = await fetchUsers()
-          setUsers(newData)
+          await refetchUsers()
         })
       }
     })
@@ -42,7 +64,7 @@ const Users = () => {
 
   useEffect(() => {
     if (token) {
-      fetchUsers().then((data) => setUsers(data))
+      refetchUsers()
     }
   }, [token])
 
@@ -68,6 +90,28 @@ const Users = () => {
       key: 'role'
     }
   ]
+
+  const createUser = (e: any) => {
+    e.preventDefault()
+    setUserModalVisible(true)
+  }
+
+  const onCancel = () => {
+    setUserModalVisible(false)
+  }
+
+  const onSubmit = async (value: any) => {
+    console.log(value)
+    const userData = {
+      ...value,
+      role: value.admin ? 'admin' : 'user'
+    }
+    await addUser(userData).then(async () => {
+      const newData = await fetchUsers()
+      setUsers(newData)
+    })
+    setUserModalVisible(false)
+  }
 
   if (isAdmin()) {
     columns.push({
@@ -97,10 +141,15 @@ const Users = () => {
 
   return (
     <>
-      <Button onClick={() => {}} style={{ marginBottom: '20px' }}>
+      <Button onClick={createUser} style={{ marginBottom: '20px' }}>
         Create User
       </Button>
-      <Table dataSource={users} columns={columns} />;
+      <Table dataSource={users} columns={columns} />
+      <UserModal
+        visible={userModalVisible}
+        onCancel={onCancel}
+        onSubmit={onSubmit}
+      />
     </>
   )
 }
