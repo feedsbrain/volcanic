@@ -12,6 +12,13 @@ router.get('/', authenticationMiddleware(), async (req, res) => {
 })
 
 router.delete('/:id', authenticationMiddleware(['admin']), async (req, res) => {
+  // validate user
+  const user = await User.query().findById(req.params.id)
+
+  if (!user || user.name === 'admin') {
+    res.status(404).json({ message: 'User not found' })
+  }
+
   await User.query().deleteById(req.params.id)
   res.json({ message: 'User deleted' })
 })

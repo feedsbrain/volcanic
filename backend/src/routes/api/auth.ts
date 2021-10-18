@@ -19,6 +19,10 @@ router.post('/login', async (req, res) => {
   }
 
   const user = await User.query().findOne({ email })
+  if (!user) {
+    return res.status(401).json({ result: 'unautorized' })
+  }
+
   const verified = await verifyPassword(password, user.password)
 
   if (!verified) {

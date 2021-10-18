@@ -1,5 +1,5 @@
-.login-wrapper {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.login-wrapper {  
+  padding: 100px;
+  background: #ececec;
+  min-height: 100vh;
 }

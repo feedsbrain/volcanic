@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import jwt from 'jsonwebtoken'
 
 export default () => {
   const getToken = () => {
@@ -14,7 +15,18 @@ export default () => {
     setToken(userToken.token)
   }
 
+  // simple admin checking for ui
+  // api will actually validate the token
+  const isAdmin = () => {
+    if (token) {
+      const decoded: any = jwt.decode(token)
+      return decoded?.scope.includes('admin')
+    }
+    return false
+  }
+
   return {
+    isAdmin,
     setToken: saveToken,
     token
   }
