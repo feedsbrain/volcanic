@@ -1,0 +1,29 @@
+version: "3"
+services:
+  voltest-test-db:
+    image: "bitnami/postgresql:latest"
+    container_name: voltest-test-db
+    restart: always
+    environment:
+      POSTGRESQL_USERNAME: voluser
+      POSTGRESQL_DATABASE: volcanic
+      POSTGRES_PASSWORD: volpass
+
+  voltest-backend-test:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile-test
+    entrypoint:
+      - /bin/bash
+      - -c
+      - "npm run migration && npm run seed && npm test"
+    restart: on-failure:5
+    environment:
+      DB_HOST: voltest-test-db
+      DB_PORT: 5432
+      DB_USER: voluser
+      DB_PASSWORD: volpass
+      DB_NAME: volcanic
+      NODE_ENV: test
+    depends_on:
+      - voltest-test-db
