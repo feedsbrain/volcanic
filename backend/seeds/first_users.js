@@ -15,8 +15,15 @@ exports.seed = (knex) => {
           id: uuidv4(),
           name: 'admin',
           email: 'admin@voltest.com',
-          password: await hashPassword('admin'),
+          password: await hashPassword('admin!123'),
           role: 'admin'
+        },
+        {
+          id: uuidv4(),
+          name: 'user',
+          email: 'user@voltest.com',
+          password: await hashPassword('user!123'),
+          role: 'user'
         }
       ])
     })
