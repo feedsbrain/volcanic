@@ -1,6 +1,20 @@
 require('dotenv').config()
 
-module.exports = {
+const config = {
+  test: {
+    client: 'pg',
+    connection: {
+      host: process.env.DB_HOST || 'localhost',
+      port: parseInt(process.env.DB_PORT || '5432'),
+      database: process.env.DB_NAME || 'postgres',
+      user: process.env.DB_USER || 'postgres',
+      password: process.env.DB_PASSWORD || ''
+    },
+    migrations: {
+      tableName: 'knex_migrations'
+    }
+  },
+
   development: {
     client: 'pg',
     connection: {
@@ -43,3 +57,5 @@ module.exports = {
     }
   }
 }
+
+module.exports = config

@@ -6,16 +6,6 @@ import staging from './staging'
 
 export interface Config {
   port: number
-  db: {
-    client: 'pg'
-    connection: {
-      host: string
-      port: number
-      user: string
-      password: string
-      database: string
-    }
-  }
 }
 
 export const NODE_ENV = process.env.NODE_ENV || 'development'

@@ -1,8 +1,8 @@
 exports.up = function (knex) {
   return knex.schema.createTable('users', function (table) {
-    table.string('id').notNullable()
+    table.uuid('id').primary()
     table.string('name', 255).notNullable()
-    table.string('email', 100).notNullable()
+    table.string('email', 100).unique().notNullable()
     table.string('password', 255).notNullable()
     table.string('role', 50).notNullable()
   })

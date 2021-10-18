@@ -1,3 +1,4 @@
+const { v4: uuidv4 } = require('uuid')
 const bcrypt = require('bcrypt')
 
 const hashPassword = async (password) => {
@@ -11,7 +12,7 @@ exports.seed = (knex) => {
     .then(async () => {
       return knex('users').insert([
         {
-          id: 'admin',
+          id: uuidv4(),
           name: 'admin',
           email: 'admin@voltest.com',
           password: await hashPassword('admin'),

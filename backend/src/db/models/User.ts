@@ -11,13 +11,25 @@ export default class User extends BaseModel {
   role!: string
 
   static jsonSchema = {
+    ...super.jsonSchema,
     type: 'object',
-    required: ['name', 'email'],
+    required: super.jsonSchema.required.concat([
+      'name',
+      'email',
+      'password',
+      'role'
+    ]),
 
     properties: {
-      id: { type: 'uuid' },
+      ...super.jsonSchema.properties,
       name: { type: 'string', minLength: 1, maxLength: 255 },
       email: { type: 'string', minLength: 1, maxLength: 255 }
     }
+  }
+
+  $formatJson = (json: any) => {
+    json = super.$formatJson(json)
+    delete json.password
+    return json
   }
 }
