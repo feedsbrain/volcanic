@@ -65,7 +65,7 @@ const UserModal: FC<UserModalProps> = (props: UserModalProps) => {
           name="admin"
           valuePropName="checked"
           label="Is Admin"
-          style={{ display: isAdmin() ? 'block' : 'none' }}
+          style={{ display: isAdmin() ? 'flex' : 'none' }}
         >
           <Checkbox />
         </Form.Item>
@@ -74,13 +74,7 @@ const UserModal: FC<UserModalProps> = (props: UserModalProps) => {
   }
 
   return (
-    <Modal
-      title="Add User"
-      width={640}
-      destroyOnClose
-      visible={visible}
-      {...modalFooter}
-    >
+    <Modal title="Add User" destroyOnClose visible={visible} {...modalFooter}>
       {getModalContent()}
     </Modal>
   )

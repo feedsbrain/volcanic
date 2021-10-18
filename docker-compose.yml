@@ -15,7 +15,7 @@ services:
     entrypoint:
       - /bin/bash
       - -c
-      - "/app/entrypoint.sh"
+      - "./wait && npm run migration && npm run seed"
     restart: on-failure:5
     environment:
       DB_HOST: voltest-db
@@ -24,6 +24,7 @@ services:
       DB_PASSWORD: volpass
       DB_NAME: volcanic
       NODE_ENV: production
+      WAIT_HOSTS: voltest-db:5432
     depends_on:
       - voltest-db
 

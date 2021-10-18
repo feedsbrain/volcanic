@@ -16,7 +16,7 @@ services:
     entrypoint:
       - /bin/bash
       - -c
-      - "npm run migration && npm run seed && npm test"
+      - "./wait && npm run migration && npm run seed"
     restart: on-failure:5
     environment:
       DB_HOST: voltest-test-db
@@ -25,5 +25,6 @@ services:
       DB_PASSWORD: volpass
       DB_NAME: volcanic
       NODE_ENV: test
+      WAIT_HOSTS: voltest-test-db:5432
     depends_on:
       - voltest-test-db
