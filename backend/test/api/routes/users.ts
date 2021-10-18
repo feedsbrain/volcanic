@@ -29,7 +29,13 @@ test.after.always(async (t) => {
 })
 
 test.serial('get /users', async (t) => {
-  const res = await request(app).get('/api/users')
+  const authRes = await request(app)
+    .post('/api/auth/login')
+    .send({ email: 'user@testuser.com', password: 'test' })
+
+  const res = await request(app)
+    .get('/api/users')
+    .set('Authorization', `Bearer ${authRes.body.token}`)
 
   t.is(res.status, 200)
   t.true(Array.isArray(res.body) && res.body.length > 0)
