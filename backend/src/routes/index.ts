@@ -1,4 +1,5 @@
 import defaultRoutes from './default'
-import apiRoutes from './api'
+import authRoutes from './api/auth'
+import userRoutes from './api/users'
 
-export default [defaultRoutes, ...apiRoutes]
+export default [defaultRoutes, authRoutes, userRoutes]

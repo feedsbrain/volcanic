@@ -4,6 +4,7 @@ import { Form, Input, Button, Row, Col, Card, Alert } from 'antd'
 import { UserOutlined, LockOutlined } from '@ant-design/icons'
 
 import './Login.css'
+import { API_URL } from '../../config'
 
 type LoginProps = {
   setToken: Function
@@ -15,7 +16,7 @@ const Login = ({ setToken }: LoginProps) => {
   const onFinish = async (values: any) => {
     console.log('Success:', values)
 
-    const res = await fetch('http://localhost:3001/api/auth/login', {
+    const res = await fetch(`${API_URL}/auth/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

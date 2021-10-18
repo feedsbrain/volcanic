@@ -5,6 +5,7 @@ import { Table, Button, Space, Modal } from 'antd'
 import { ExclamationCircleOutlined } from '@ant-design/icons'
 import useToken from '../../hooks/useToken'
 import UserModal from './UserModal'
+import { API_URL } from '../../config'
 
 const Users = () => {
   const { token, isAdmin } = useToken()
@@ -12,7 +13,7 @@ const Users = () => {
   const [userModalVisible, setUserModalVisible] = useState(false)
 
   const fetchUsers = async () => {
-    return fetch('http://localhost:3001/api/users', {
+    return fetch(`${API_URL}/users`, {
       method: 'GET',
       headers: {
         Authorization: `Bearer ${token}`
@@ -31,7 +32,7 @@ const Users = () => {
     password: string
     role: string
   }) => {
-    return fetch('http://localhost:3001/api/users', {
+    return fetch(`${API_URL}/users`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -50,7 +51,7 @@ const Users = () => {
       okText: 'Yes',
       cancelText: 'No',
       onOk: () => {
-        return fetch(`http://localhost:3001/api/users/${record.id}`, {
+        return fetch(`${API_URL}/users/${record.id}`, {
           method: 'DELETE',
           headers: {
             Authorization: `Bearer ${token}`

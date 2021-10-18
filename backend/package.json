@@ -16,7 +16,8 @@
     "start": "node build/src/start.js",
     "dev": "TS_NODE_FILES=true nodemon --watch 'src/**' --ext 'ts,json' --ignore 'src/**/*.spec.ts' --exec 'ts-node' src/start.ts",
     "lint": "eslint ./src/**/*.ts --fix",
-    "knex:init": "knex init"
+    "migration": "knex migrate:up",
+    "seed": "knex seed:run"
   },
   "author": "Indra Gunawan <feedsbrain@gmail.com>",
   "license": "ISC",
