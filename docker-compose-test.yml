@@ -16,7 +16,7 @@ services:
     entrypoint:
       - /bin/bash
       - -c
-      - "./wait && npm run migration && npm run seed"
+      - "./wait && npm run migration && npm run seed && npm test"
     restart: on-failure:5
     environment:
       DB_HOST: voltest-test-db
