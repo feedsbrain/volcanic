@@ -1,0 +1,26 @@
+@import '~antd/dist/antd.css';
+
+.site-layout-content {
+  min-height: 86.5vh;
+  padding: 24px;
+  background: #fff;
+}
+
+.logo {
+  float: left;
+  width: 120px;
+  height: 31px;  
+}
+
+.ant-row-rtl .logo {
+  float: right;
+  margin: 16px 0 16px 24px;
+}
+
+.logo h2 {
+  color: #fff;
+  text-align: center;
+  font-weight: bold;
+  font-variant: small-caps;
+  font-size: 1.8em;
+}

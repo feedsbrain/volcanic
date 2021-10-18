@@ -1,0 +1,59 @@
+version: "3"
+services:
+  voltest-db:
+    image: "bitnami/postgresql:latest"
+    container_name: voltest-db
+    restart: always
+    environment:
+      POSTGRESQL_USERNAME: voluser
+      POSTGRESQL_DATABASE: volcanic
+      POSTGRES_PASSWORD: volpass
+
+  voltest-backend-migration:
+    build:
+      context: ./backend
+    entrypoint:
+      - /bin/bash
+      - -c
+      - "/app/entrypoint.sh"
+    restart: on-failure:5
+    environment:
+      DB_HOST: voltest-db
+      DB_PORT: 5432
+      DB_USER: voluser
+      DB_PASSWORD: volpass
+      DB_NAME: volcanic
+      NODE_ENV: production
+    depends_on:
+      - voltest-db
+
+  voltest-backend:
+    build:
+      context: ./backend
+    container_name: voltest-backend
+    restart: always
+    ports:
+      - "3001:80"
+    environment:
+      DB_HOST: voltest-db
+      DB_PORT: 5432
+      DB_USER: voluser
+      DB_PASSWORD: volpass
+      DB_NAME: volcanic
+      NODE_ENV: production
+    depends_on:
+      - voltest-db
+
+  voltest-frontend:
+    build:
+      context: ./frontend
+      args:
+        API_URL: http://voltest-backend/api
+    container_name: voltest-frontend
+    restart: always
+    ports:
+      - "3000:80"
+    environment:
+      NODE_ENV: production
+    depends_on:
+      - voltest-backend
