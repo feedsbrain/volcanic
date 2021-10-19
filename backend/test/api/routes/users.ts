@@ -40,3 +40,23 @@ test.serial('get /users', async (t) => {
   t.is(res.status, 200)
   t.true(Array.isArray(res.body) && res.body.length > 0)
 })
+
+test.serial('get /user/:id', async (t) => {
+  const authRes = await request(app)
+    .post('/api/auth/login')
+    .send({ email: 'user@testuser.com', password: 'test' })
+
+  const usersRes = await request(app)
+    .get('/api/users')
+    .set('Authorization', `Bearer ${authRes.body.token}`)
+  
+  // pick one user, not ideal we should store created test user in user context
+  const user = usersRes.body[0]
+  
+  const res = await request(app)
+    .get(`/api/users/${user.id}`)
+    .set('Authorization', `Bearer ${authRes.body.token}`)
+
+  t.is(res.status, 200)
+  t.true(res.body.id === user.id)
+})
