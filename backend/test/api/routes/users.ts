@@ -12,7 +12,7 @@ test.before((t) => {
   db.init()
 })
 
-test.beforeEach(async (t) => {
+test.before(async (t) => {
   const user = await User.query().insert({
     id: uuidv4(),
     name: 'Test User',
