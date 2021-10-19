@@ -41,7 +41,7 @@ test.serial('get /users', async (t) => {
   t.true(Array.isArray(res.body) && res.body.length > 0)
 })
 
-test.serial('get /user/:id', async (t) => {
+test.serial('get /users/:id', async (t) => {
   const authRes = await request(app)
     .post('/api/auth/login')
     .send({ email: 'user@testuser.com', password: 'test' })
