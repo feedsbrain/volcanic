@@ -8,6 +8,16 @@ const { v4: uuidv4 } = require('uuid')
 
 const router = express.Router()
 
+router.get('/:id', authenticationMiddleware(), async (req, res) => {
+  const user = await User.query().findById(req.params.id)
+
+  if (!user) {
+    res.status(404).json({ message: 'User not found' })
+  }
+  
+  res.json(user)
+})
+
 router.get('/', authenticationMiddleware(), async (req, res) => {
   const users = await User.query()
   res.json(users)
